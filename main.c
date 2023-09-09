@@ -38,7 +38,7 @@ int obterNota(float *nota, const char *nomeDaNota) {
     char notaStr[10]; // Usado para armazenar temporariamente a entrada das notas
 
     while (1) {
-        printf("Digite a %s do aluno: ", nomeDaNota);
+        printf("Digite a %s do aluno (entre 0 e 10): ", nomeDaNota);
         fgets(notaStr, sizeof(notaStr), stdin);
         notaStr[strcspn(notaStr, "\n")] = '\0'; // Remove a quebra de linha
 
@@ -55,7 +55,12 @@ int obterNota(float *nota, const char *nomeDaNota) {
 }
 
 int main() {
-    FILE *saida = fopen("SituacaoFinal.csv", "w");
+    char nomeArquivoSaida[100];
+    printf("Digite o nome do arquivo de saída (ex: SituacaoFinal.csv): ");
+    fgets(nomeArquivoSaida, sizeof(nomeArquivoSaida), stdin);
+    nomeArquivoSaida[strcspn(nomeArquivoSaida, "\n")] = '\0'; // Remove a quebra de linha
+
+    FILE *saida = fopen(nomeArquivoSaida, "w");
     if (saida == NULL) {
         perror("Erro ao abrir o arquivo de saída");
         return 1;
@@ -86,7 +91,7 @@ int main() {
 
     fclose(saida);
 
-    printf("Processamento concluído. Resultados salvos em SituacaoFinal.csv\n");
+    printf("Processamento concluído. Resultados salvos em %s\n", nomeArquivoSaida);
 
     return 0;
 }
