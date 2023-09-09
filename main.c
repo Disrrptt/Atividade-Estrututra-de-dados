@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 // Definição da estrutura Aluno
 typedef struct {
@@ -49,9 +48,8 @@ int main() {
     printf("Digite a nota 2 do aluno: ");
     scanf("%f", &aluno.nota2);
 
-    // Calcula a média das notas do aluno
+    // Calcula a média das notas do aluno e determina a situação
     float media = calcularMedia(aluno.nota1, aluno.nota2);
-    // Determina a situação do aluno
     const char *situacao = determinarSituacao(media);
 
     // Escreve os dados no arquivo de saída
