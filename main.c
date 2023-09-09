@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Definição da estrutura Aluno
 typedef struct {
@@ -29,15 +30,24 @@ int main() {
     }
 
     // Escreve o cabeçalho no arquivo de saída
-    fprintf(saida, "Nome,Nota Média,Situação\n");
+    fprintf(saida, "Nome,Telefone,Curso,Nota Média,Situação\n");
 
     // Solicita os dados do aluno ao usuário
     Aluno aluno;
     printf("Digite o nome do aluno: ");
     fgets(aluno.nome, sizeof(aluno.nome), stdin);
 
-    printf("Digite o telefone do aluno: ");
+    // Solicita o telefone do aluno, aceitando apenas números
+    printf("Digite o telefone do aluno (apenas números): ");
     fgets(aluno.telefone, sizeof(aluno.telefone), stdin);
+
+    // Remove os caracteres não numéricos do telefone
+    int len = strlen(aluno.telefone);
+    for (int i = 0; i < len; i++) {
+        if (aluno.telefone[i] < '0' || aluno.telefone[i] > '9') {
+            aluno.telefone[i] = '\0'; // Substitui não números por terminador nulo
+        }
+    }
 
     printf("Digite o curso do aluno: ");
     fgets(aluno.curso, sizeof(aluno.curso), stdin);
@@ -53,7 +63,7 @@ int main() {
     const char *situacao = determinarSituacao(media);
 
     // Escreve os dados no arquivo de saída
-    fprintf(saida, "%s,%.2f,%s\n", aluno.nome, media, situacao);
+    fprintf(saida, "%s,%s,%s,%.2f,%s\n", aluno.nome, aluno.telefone, aluno.curso, media, situacao);
 
     // Fecha o arquivo de saída
     fclose(saida);
